@@ -1,6 +1,6 @@
 import axios from 'axios';
-const url = 'https://academia-server-orcin.vercel.app/api';
-// const url = 'http://localhost:8000/api';
+// const url = 'https://academia-server-orcin.vercel.app/api';
+const url = 'http://localhost:8000/api';
 
 axios.defaults.withCredentials = true;
 
@@ -74,6 +74,10 @@ export const verifyUser = async ()=>{
         const response = await axios.get(`${url}/verify`,{
             timeout:6000,
             withCredentials: true,
+            headers: {
+                'token': localStorage.getItem("token"),
+                'role':localStorage.getItem("role")
+            }
         })
         if(response.status===200){
             return{
@@ -95,29 +99,34 @@ export const verifyUser = async ()=>{
 }
 
 // logout cookie command
-export const logoutCookie = async ()=>{
-    try{
-        const response = await axios.get(`${url}/logout`,{
-            timeout:6000
-        })
-        if(response.status===200){
-            return{
-                status:response.data.status,
-                data:response.data.data
+export const logoutCookie = async () => {
+    try {
+        const response = await axios.get(`${url}/logout`, {
+            timeout: 6000,
+            withCredentials: true,
+            headers: {
+                'token': localStorage.getItem("token"),
+                'role':localStorage.getItem("role")
             }
+        });
+        if (response.status === 200) {
+            return {
+                status: response.data.status,
+                data: response.data.data,
+            };
         }
-    } catch(error){
+    } catch (error) {
         if (error.response?.status >= 400) {
             return {
                 status: error.response.data.status,
-                message: error.response.data.message
-            }
+                message: error.response.data.message,
+            };
         }
         return {
-            message: "Internet is slow Try Again"
-        }
+            message: "Internet is slow Try Again",
+        };
     }
-}
+};
 
 
 
@@ -127,7 +136,11 @@ export const logoutCookie = async ()=>{
 export const createClass = async (data) => {
     try {
         const response = await axios.post(`${url}/class`, data, {
-            timeout: 6000, // Timeout set to 6 seconds
+            timeout: 6000,
+            headers: {
+                'token': localStorage.getItem("token"),
+                'role':localStorage.getItem("role")
+            }
         });
 
         if (response.status === 201) {
@@ -154,7 +167,11 @@ export const createClass = async (data) => {
 export const getAllClasses = async ()=>{
     try{
         const response = await axios.get(`${url}/class`,{
-            timeout:6000
+            timeout:6000,
+            headers: {
+                'token': localStorage.getItem("token"),
+                'role':localStorage.getItem("role")
+            }
         })
         console.log(response);
         if(response.status===200){
@@ -179,7 +196,11 @@ export const getAllClasses = async ()=>{
 export const getSection = async (section)=>{
     try{
         const response = await axios.get(`${url}/class/${section}/sections`,{
-            timeout:6000
+            timeout:6000,
+            headers: {
+                'token': localStorage.getItem("token"),
+                'role':localStorage.getItem("role")
+            }
         })
         if(response.status===200){
             return{
@@ -204,7 +225,11 @@ export const getSection = async (section)=>{
 export const getManagement = async ()=>{
     try{
         const response = await axios.get(`${url}/management`,{
-            timeout:6000
+            timeout:6000,
+            headers: {
+                'token': localStorage.getItem("token"),
+                'role':localStorage.getItem("role")
+            }
         })
         if(response.status===200){
             return{
@@ -228,7 +253,11 @@ export const getManagement = async ()=>{
 export const createManagement = async (data)=>{
     try{
         const response = await axios.post(`${url}/management`,data,{
-            timeout:6000
+            timeout:6000,
+            headers: {
+                'token': localStorage.getItem("token"),
+                'role':localStorage.getItem("role")
+            }
         })
         if(response.status===201){
             return{
@@ -259,6 +288,8 @@ export const updateManagement = async (managementId, updates) => {
                 timeout: 6000,
                 headers: {
                     'Content-Type': 'application/json',
+                    'token': localStorage.getItem("token"),
+                    'role':localStorage.getItem("role")
                 },
             }
         );
@@ -287,7 +318,11 @@ export const updateManagement = async (managementId, updates) => {
 export const removeManagement = async (managementId) => {
     try {
         const response = await axios.delete(`${url}/management/${managementId}`, {
-            timeout: 6000,
+            timeout: 6000,            
+            headers: {
+                'token': localStorage.getItem("token"),
+                'role':localStorage.getItem("role")
+            }
         });
 
         if (response.status === 200) {
@@ -318,7 +353,9 @@ export const ClassStudent = async (classId)=>{
             timeout:6000,
             headers: {
                 'Content-Type': 'application/json',
-                code:localStorage.getItem("code")
+                code:localStorage.getItem("code"),
+                'token': localStorage.getItem("token"),
+                'role':localStorage.getItem("role")
             },
         })
         if(response.status===200){
@@ -345,6 +382,10 @@ export const addStudentAccount = async (data) => {
     try {
         const response = await axios.post(`${url}/students`, data, {
             timeout: 6000,
+            headers: {
+                'token': localStorage.getItem("token"),
+                'role':localStorage.getItem("role")
+            }
         });
         if (response.status === 201) {
             return {
@@ -377,7 +418,9 @@ export const MarkAttendance = async (studentId, classId) => {
             timeout: 6000,
             headers: {
                 'Content-Type': 'application/json',
-                code: localStorage.getItem("code")
+                code: localStorage.getItem("code"),
+                'token': localStorage.getItem("token"),
+                'role':localStorage.getItem("role")
             },
         });
 
@@ -411,7 +454,9 @@ export const GetStudentAttendence = async (studentId, classId) => {
             timeout: 6000,
             headers: {
                 'Content-Type': 'application/json',
-                code: localStorage.getItem("code")
+                code: localStorage.getItem("code"),
+                'token': localStorage.getItem("token"),
+                'role':localStorage.getItem("role")
             },
         });
 
@@ -443,7 +488,9 @@ export const GetStudents = async (data)=>{
             timeout:6000,
             headers: {
                 'Content-Type': 'application/json',
-                code:localStorage.getItem("code")
+                code:localStorage.getItem("code"),
+                'token': localStorage.getItem("token"),
+                'role':localStorage.getItem("role")
             },
         })
         
@@ -474,6 +521,8 @@ export const UpdateStudentExam = async (studentId,data)=>{
             headers: {
                 'Content-Type': 'application/json',
                 code:localStorage.getItem("code"),
+                'token': localStorage.getItem("token"),
+                'role':localStorage.getItem("role")
             },
         })
         if(response.status===200){
@@ -509,6 +558,8 @@ export const getClass = async ()=>{
             headers: {
                 'Content-Type': 'application/json',
                 code:localStorage.getItem("code"),
+                'token': localStorage.getItem("token"),
+                'role':localStorage.getItem("role")
             },
         })
         if(response.status===200){
@@ -538,6 +589,10 @@ export const addTeacher = async (teacherData) => {
     try {
         const response = await axios.post(`${url}/teachers`, teacherData, {
             timeout: 6000,
+            headers: {
+                'token': localStorage.getItem("token"),
+                'role':localStorage.getItem("role")
+            }
         });
 
         if (response.status === 201) {
@@ -568,6 +623,8 @@ export const getTeachers = async ()=>{
             headers: {
                 'Content-Type': 'application/json',
                 code:localStorage.getItem("code"),
+                'token': localStorage.getItem("token"),
+                'role':localStorage.getItem("role")
             },
         })
         if(response.status===200){
@@ -599,6 +656,8 @@ export const updateTeacher = async (teacherId, updates) => {
                 timeout: 6000,
                 headers: {
                     'Content-Type': 'application/json',
+                    'token': localStorage.getItem("token"),
+                    'role':localStorage.getItem("role")
                 },
             }
         );
@@ -629,6 +688,10 @@ export const removeTeacher = async (teacherId) => {
     try {
         const response = await axios.delete(`${url}/teacher/${teacherId}`, {
             timeout: 6000,
+            headers: {
+                'token': localStorage.getItem("token"),
+                'role':localStorage.getItem("role")
+            }
         });
 
         if (response.status === 200) {
@@ -661,6 +724,8 @@ export const addResource = async (classId, resource) => {
                 headers: {
                     'Content-Type': 'application/json',
                     code: localStorage.getItem('code'),
+                    'token': localStorage.getItem("token"),
+                    'role':localStorage.getItem("role")
                 },
             }
         );
@@ -693,6 +758,8 @@ export const getResources = async (classId) => {
                 headers: {
                     'Content-Type': 'application/json',
                     code: localStorage.getItem('code'),
+                    'token': localStorage.getItem("token"),
+                    'role':localStorage.getItem("role")
                 },
             }
         );

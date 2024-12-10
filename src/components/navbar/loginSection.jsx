@@ -21,7 +21,7 @@ const StyledMenu = styled((props) => (
 const LoginButton = () => {
 
     const [anchorEl, setAnchorEl] = React.useState(null);
-    const {user,isUser} = useContext(UserContext);
+    const {user,isUser,setIsUser} = useContext(UserContext);
 
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
@@ -37,7 +37,8 @@ const LoginButton = () => {
         localStorage.clear();
         handleClose();
         await logoutCookie();
-        window.location.reload();
+        setIsUser(false);
+        // window.location.reload();
     }
 
     const UserPage = ()=>{

@@ -30,6 +30,7 @@ const Login = () => {
             toastSuccess();
             setTimeout(()=>{
                 localStorage.setItem('role',response.role);
+                localStorage.setItem('token',response.token);
                 window.location.reload();
             },2000)
             console.log("Login Successfull");
