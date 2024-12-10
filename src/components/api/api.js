@@ -1,5 +1,6 @@
 import axios from 'axios';
-const url = 'http://localhost:8000/api';
+const url = 'https://academia-server-orcin.vercel.app/api';
+// const url = 'http://localhost:8000/api';
 
 axios.defaults.withCredentials = true;
 

@@ -88,7 +88,7 @@ const Navbar = () => {
                         <div className='w-[60%] hidden sm:flex justify-around'>
                             <NavLink to="/" className={({ isActive }) => isActive ? "text-orange-400" : "text-white hover:text-[#00FF9C]"}> Home</NavLink>
                             {
-                                !isUser ? <>
+                                !localStorage.getItem("role") ? <>
                                     <NavLink to="/about" className={({ isActive }) => isActive ? "text-orange-400 font-bold" : "text-white hover:text-yellow-200 "}> About Us</NavLink>
                                     <NavLink to="/contact" className={({ isActive }) => isActive ? "text-orange-400 font-bold" : "text-white hover:text-yellow-200 "}> Contact </NavLink>
                                     <NavLink to="/working" className={({ isActive }) => isActive ? "text-orange-400 font-bold" : "text-white hover:text-yellow-200 "}> Working </NavLink>
